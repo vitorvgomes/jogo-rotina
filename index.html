@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Routine: Shared Streaks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="game-container">
+        <!-- SECÇÃO 1: CONFIGURAÇÃO DO PERSONAGEM -->
+        <section id="setup-screen" class="screen">
+            <h1 class="pixel-title">Criação do Fazendeiro</h1>
+            <form id="character-form" class="creator-grid" onsubmit="return false;">
+                <div class="control-group">
+                    <label for="player-name">Nome do Fazendeiro:</label>
+                    <input type="text" id="player-name" value="Farmer" required>
+                    
+                    <label for="farm-type">Tipo de Fazenda:</label>
+                    <select id="farm-type">
+                        <option value="🌾 Padrão">🌾 Padrão</option>
+                        <option value="🌲 Floresta">🌲 Floresta</option>
+                        <option value="⛰️ Montanha">⛰️ Montanha</option>
+                    </select>
+                </div>
+
+                <div class="avatar-preview-box">
+                    <span id="avatar-preview-icon" aria-live="polite">👨‍🌾</span>
+                    <div id="shirt-color-preview"></div>
+                </div>
+
+                <div class="control-group">
+                    <label for="avatar-style">Visual Base:</label>
+                    <select id="avatar-style">
+                        <option value="👨‍🌾">Tradicional Masculino</option>
+                        <option value="👩‍🌾">Tradicional Feminino</option>
+                        <option value="🤠">Caçador das Minas</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="shirt-color">Cor da Camisa:</label>
+                    <input type="color" id="shirt-color" value="#e94560">
+                </div>
+
+                <div class="control-group-full">
+                    <label for="favorite-thing">Sua Coisa Favorita:</label>
+                    <input type="text" id="favorite-thing" value="Stardrop" required>
+                </div>
+
+                <button type="submit" id="btn-start-game" class="pixel-button btn-full">
+                    Começar Vida no Campo ➡️
+                </button>
+            </form>
+        </section>
+
+        <!-- SECÇÃO 2: DASHBOARD DO JOGO -->
+        <section id="game-screen" class="screen hidden">
+            <h1 id="display-farm-name" class="pixel-title">Fazenda</h1>
+            
+            <!-- Painel RPG -->
+            <header class="status-box">
+                <div class="mini-avatar-wrapper">
+                    <div id="display-avatar" class="mini-avatar">👨‍🌾</div>
+                    <div id="display-shirt"></div>
+                </div>
+                <div class="status-details">
+                    <p><strong>Fazendeiro:</strong> <span id="display-player-name"></span></p>
+                    <p><strong>Nível:</strong> <span id="display-level">1</span> | <strong>Ouro:</strong> <span id="display-gold">0</span>g</p>
+                    <div class="progress-wrapper">
+                        <span>Energia Diária (XP): <span id="display-xp-text">0/100</span></span>
+                        <div class="progress-bar-container">
+                            <div id="xp-progress-bar" class="xp-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Painel de Controlo de Abas -->
+            <nav class="tabs-container">
+                <button id="tab-group" class="tab-button active">👥 Grupo</button>
+                <button id="tab-individual" class="tab-button">👤 Individual</button>
+            </nav>
+
+            <!-- CONTEÚDO DA ABA: GRUPO -->
+            <div id="content-group" class="tab-content">
+                <section class="streak-widget">
+                    <div class="streak-info">
+                        <span id="streak-group-fire" class="streak-fire">🔥</span>
+                        <div>
+                            <h3>Ofensiva Coletiva</h3>
+                            <p><span id="display-group-streak">0</span> dias seguidos</p>
+                        </div>
+                    </div>
+                    <div class="streak-meta">
+                        <p>Meta Coletiva: <span id="display-group-progress">0/200</span> XP</p>
+                        <button id="btn-buy-group-shield" class="pixel-button btn-small">🛡️ Protetor (-50g)</button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- CONTEÚDO DA ABA: INDIVIDUAL -->
+            <div id="content-individual" class="tab-content hidden">
+                <section class="streak-widget">
+                    <div class="streak-info">
+                        <span id="streak-individual-fire" class="streak-fire">🔥</span>
+                        <div>
+                            <h3>Minha Ofensiva</h3>
+                            <p><span id="display-individual-streak">0</span> dias seguidos</p>
+                        </div>
+                    </div>
+                    <div class="streak-meta">
+                        <p>Meta Solo: <span id="display-individual-progress">0/100</span> XP</p>
+                        <button id="btn-buy-individual-shield" class="pixel-button btn-small">🛡️ Protetor (-50g)</button>
+                    </div>
+                </section>
+            </div>
+            
+
+            <!-- Criador de Missões Contextual -->
+            <section class="task-creator-box">
+                <h2>🔨 Adicionar ao Quadro</h2>
+                <div class="inline-form">
+                    <input type="text" id="new-task-desc" placeholder="Ex: Nova tarefa...">
+                    <select id="new-task-difficulty">
+                        <option value="1">Leve</option>
+                        <option value="2">Regular</option>
+                        <option value="3">Desafio</option>
+                    </select>
+                    <button id="btn-add-task" class="pixel-button">Fixar</button>
+                </div>
+            </section>
+
+            <!-- Quadro de Avisos Filtrado -->
+            <section class="bulletin-board">
+                <h2 id="bulletin-title">📋 Quadro de Avisos (Grupo)</h2>
+                <div id="tasks-container"></div>
+            </section>
+        </section>
+    </main>
+    <script src="app.js" defer></script>
+</body>
+</html>
